@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <form action="" method="post" enctype="multipart/form-data" class="text-center border p-4 rounded shadow bg-light">
+            {% include 'partial/form.html' %}
+            <input class="btn btn-outline-success" type="submit" value="Register"/>
+        </form>
+    </div>
+{% endblock %}

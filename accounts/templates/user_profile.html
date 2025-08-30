@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card-body">
+        <br>
+        <h5>Username - {{ profile.username }}</h5>
+        <p>Name - {{ profile.first_name }}</p>
+        <p>Surname - {{ profile.last_name }}</p>
+    </div>
+
+    <h3 class="mt-4">Фото {{ profile.username }}</h3>
+{#    {% for topic in topics %}#}
+{#        <div class="col-12 mb-3">#}
+{#            <a class="text-decoration-none fw-bold" href="">#}
+{#                <div class="card w-100">#}
+{#                    <div class="card-body d-flex justify-content-between align-items-center">#}
+{#                        <div>#}
+{#                            {{ topic.name }}#}
+{#                        </div>#}
+{#                        <div class="text-nowrap mx-3">#}
+{#                            {{ topic.created_at|date:"d.m.Y" }}#}
+{#                        </div>#}
+{#                        <div class="text-nowrap mx-3">#}
+{#                            {{ topic.author }}#}
+{#                        </div>#}
+{#                        <div class="text-end text-nowrap">#}
+{#                            ответов {{ topic.comments }}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </a>#}
+{#        </div>#}
+{#    {% empty %}#}
+{#        <div class="text-center mt-5">#}
+{#            <p>Тем нету</p>#}
+{#        </div>#}
+{#    {% endfor %}#}
+    <h3 class="mt-4">Альбомы {{ profile.username }}</h3>
+{% endblock %}
