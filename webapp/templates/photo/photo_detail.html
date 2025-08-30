@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="mt-3">
+        <img src="{{ photo.image.url }}" class="card-img-top" alt="#" style="max-width: 400px; height: auto; margin: 0 auto;"
+>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Описание - {{ photo.description }}</h6>
+        <p class="text-danger">
+                            Автор: {{ photo.author.first_name }} {{ photo.author.last_name }}</p>
+        <p>Дата создания - {{ photo.created_at }}</p>
+        {% if project.end_date %}
+            <p>Дата конца - {{ project.end_date }}</p>
+        {% endif %}
+    </div><br>
+    <div>
+        <span>Список пользователей у которого данное фото в избранном</span>
+    </div>
+{% endblock %}
