@@ -7,4 +7,4 @@ class PhotoForm(BaseForm):
 
     class Meta:
         model = Photo
-        fields = ('image', 'description', 'album')
+        fields = ('image', 'description', 'album', 'is_private')
