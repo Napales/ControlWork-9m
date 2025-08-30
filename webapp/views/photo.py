@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
@@ -11,11 +11,16 @@ class PhotoListView(ListView):
     template_name = 'photo/photo_list.html'
     context_object_name = 'photos'
     paginate_by = 6
+    ordering = ['-created_at']
 
 class PhotoDetailView(LoginRequiredMixin, DetailView):
     template_name = 'photo/photo_detail.html'
     model = Photo
     context_object_name = 'photo'
+
+    def get_queryset(self):
+        queryser = super().get_queryset()
+        return queryser.filter(is_private=False) | queryser.filter(author=self.request.user)
 
 class PhotoCreateView(LoginRequiredMixin, CreateView):
     template_name = 'photo/photo_create.html'
@@ -27,12 +32,25 @@ class PhotoCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class PhotoUpdateView(LoginRequiredMixin, UpdateView):
+class PhotoUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = 'photo/photo_update.html'
     form_class = PhotoForm
     model = Photo
+    permission_required = 'webapp.change_photo'
 
-class PhotoDeleteView(LoginRequiredMixin, DeleteView):
+    def has_permission(self):
+        object = self.get_object()
+        return object.author == self.request.user or super().has_permission()
+
+
+
+class PhotoDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'photo/photo_delete.html'
     model = Photo
     success_url = reverse_lazy('webapp:photo_list')
+    permission_required = 'webapp.delete_photo'
+
+    def has_permission(self):
+        object = self.get_object()
+        return object.author == self.request.user or super().has_permission()
+

@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <p>{{ album.title }}</p>
+    <p>{{ album.description }}</p>
+    <p>{{ album.created_at }}</p>
     {% include 'partial/all_photo_list.html' %}
     {% if is_paginated %}
         <div class="text-center">

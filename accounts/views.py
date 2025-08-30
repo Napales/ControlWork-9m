@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model, login
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView, DetailView
 
