@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+{% endblock %}
+
+{% block content %}
+    <h1>Update Project</h1>
+    <form action="{% url 'webapp:photo_update' photo.pk %}" method="post" enctype="multipart/form-data">
+        {% include 'partial/form.html' %}
+        <input class="btn btn-outline-success" type="submit" value="Create"/>
+    </form>
+{% endblock %}

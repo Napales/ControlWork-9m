@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 
 IS_PRIVATE_CHOICES = [
     (True, 'Приватное'),
@@ -25,5 +26,10 @@ class Photo(models.Model):
         db_table = 'photo'
         verbose_name = 'Фото'
         verbose_name_plural = 'Фотки'
+
+    def get_absolute_url(self):
+        return reverse('webapp:photo_detail', kwargs={'pk': self.pk})
+
+
 
 

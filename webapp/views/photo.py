@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from webapp.forms import PhotoForm
 from webapp.models import Photo
@@ -26,3 +26,13 @@ class PhotoCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+class PhotoUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'photo/photo_update.html'
+    form_class = PhotoForm
+    model = Photo
+
+class PhotoDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = 'photo/photo_delete.html'
+    model = Photo
+    success_url = reverse_lazy('webapp:photo_list')

@@ -14,8 +14,8 @@
                         <p class="text-danger">
                             Автор: {{ photo.author.first_name }} {{ photo.author.last_name }}</p>
                         <a href="{% url 'webapp:photo_detail' photo.pk %}" class="btn btn-outline-primary">Detail</a>
-                        <a href="" class="btn btn-outline-success">Update</a>
-                        <a href="" class="btn btn-outline-danger">Delete</a>
+                        <a href="{% url 'webapp:photo_update' photo.pk %}" class="btn btn-outline-success">Update</a>
+                        <a href="{% url 'webapp:photo_delete' photo.pk %}" class="btn btn-outline-danger">Delete</a>
                     </div>
                 </div>
             </div>
