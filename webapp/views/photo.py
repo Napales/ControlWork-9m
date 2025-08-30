@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
@@ -21,6 +22,19 @@ class PhotoDetailView(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         queryser = super().get_queryset()
         return queryser.filter(is_private=False) | queryser.filter(author=self.request.user)
+
+    def get_object(self, queryset=None):
+        token = self.kwargs.get('token')
+        if token:
+            return get_object_or_404(Photo, token=token)
+        else:
+            return super().get_object(queryset)
+
+    def post(self, request, *args, **kwargs):
+        photo = self.get_object()
+        if not photo.token and photo.author == request.user:
+            photo.generate_token()
+        return redirect(photo.get_absolute_url())
 
 class PhotoCreateView(LoginRequiredMixin, CreateView):
     template_name = 'photo/photo_create.html'

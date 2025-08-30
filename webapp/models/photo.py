@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
+import uuid
 
 IS_PRIVATE_CHOICES = [
     (True, 'Приватное'),
@@ -18,6 +19,7 @@ class Photo(models.Model):
     album = models.ForeignKey('webapp.Album', verbose_name='Альбом',
                               on_delete=models.CASCADE, related_name='photos', null=True, blank=True)
     is_private = models.BooleanField(choices=IS_PRIVATE_CHOICES, default=False, verbose_name='Приватность')
+    token = models.UUIDField(default=uuid.uuid4, editable=False, null=True)
 
     def __str__(self):
         return f"{self.id} | {self.description} | {self.author}"
@@ -29,6 +31,14 @@ class Photo(models.Model):
 
     def get_absolute_url(self):
         return reverse('webapp:photo_detail', kwargs={'pk': self.pk})
+
+    def generate_token(self):
+        if not self.token:
+            self.token = uuid.uuid4()
+            self.save()
+
+    def get_token_url(self):
+        return reverse('webapp:photo_token_detail', kwargs={'token':self.token})
 
 
 
