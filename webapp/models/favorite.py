@@ -8,3 +8,7 @@ class Favorite(models.Model):
     album = models.ForeignKey('webapp.album', on_delete=models.CASCADE, null=True, blank=True,
                               verbose_name='Альбом', related_name='favorites')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+
+
+    def __str__(self):
+        return f"{self.id} | {self.user} | {self.photo} | {self.album}"
